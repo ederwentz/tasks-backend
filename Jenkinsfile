@@ -13,7 +13,7 @@ pipeline {
       }
       stage('Sonar Analysis'){
         environment {
-          def scannerHome = tool 'SONAR_SCANNER'
+          def scannerHome = tool 'SONAR_SCANNER', type: 'hudson.plugins.sonar.SonarRunnerInstallation';
         }
         steps{
           withSonarQubeEnv('SONAR_LOCAL'){
