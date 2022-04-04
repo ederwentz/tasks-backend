@@ -1,37 +1,3 @@
-
-Skip to content
-
-    Product 
-
-Team
-Enterprise
-Explore
-Marketplace
-Pricing
-
-Sign in
-Sign up
-wcaquino /
-tasks-backend
-Public
-forked from wcaquinocursos/tasks-backend
-
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-
-    Insights
-
-tasks-backend/Jenkinsfile
-@wcaquino
-wcaquino post actions
-Latest commit b967666 on 19 Mar 2020
-History
-1 contributor
-91 lines (89 sloc) 3.34 KB
 pipeline {
     agent any
     stages {
