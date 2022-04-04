@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+	credentialsId = 'SonarToken'
+  }
   stages{
       stage('Build Backend') {
         steps {
@@ -16,8 +19,11 @@ pipeline {
                 scannerHome = tool 'SONAR_SCANNER'
             }
             steps {
+				withCredentials([
+				string(credentialsId: 'SonarToken', variable: 'PASSSERVER')
+				]) {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
+                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000/${PASSSERVER} -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
                 }
             }
         }
