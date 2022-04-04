@@ -27,6 +27,7 @@ pipeline {
                 }
             }
         }
+      }
 //      stage('Sonar Analysis') {
 //        environment {
 //            scannerHome = tool 'SONAR_SCANNER'
