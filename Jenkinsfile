@@ -20,8 +20,9 @@ pipeline {
                 withSonarQubeEnv('SONAR_LOCAL') {
                     //bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://localhost:9000 -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
                     bat "${scannerHome}sonar-scanner.bat -X -Dsonar.host.url=http://localhost:9000/${SonarToken} -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.java.binaries=target -Dsonar.projectBaseDir=C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Deploy Backend"
-                }
+              } 
             }
+          }
         }
 //      stage('Sonar Analysis') {
 //        environment {
