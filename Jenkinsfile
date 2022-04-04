@@ -11,20 +11,30 @@ pipeline {
           bat 'mvn test'
         }
       }
-      stage('Sonar Analysis') {
-        environment {
-            scannerHome = tool 'SONAR_SCANNER'
+      stage ('Sonar Analysis') {
+            environment {
+                scannerHome = tool 'SONAR_SCANNER'
+            }
+            steps {
+                withSonarQubeEnv('SONAR_LOCAL') {
+                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBack -Dsonar.host.url=http://localhost:9000 -Dsonar.login=cf6826d57f1e453e08ecbd6cf862496472061f66 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
+                }
+            }
         }
-        steps {
-          withCredentials([string(credentialsId: 'SonarToken', variable: 'jenkins')]) {
-          withSonarQubeEnv('SONAR_LOCAL') {
-              bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000/${JENKINS} -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java -Dsonar.java.binaries=target -Dsonar.projectBaseDir=/Users/Eder Wentz/.jenkins/workspace/Deploy Backend"
-              //bat "${scannerHome}/bin/sonar-scanner.bat -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.java.binaries=target -Dsonar.projectBaseDir=C:/Users/Eder Wentz/.jenkins/workspace/Deploy-Backend -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-              //bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://localhost:9000/${JENKINS} -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java -Dsonar.projectKey=Deploy-Backend -Dsonar.java.binaries=target -Dsonar.projectBaseDir=C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Deploy Backend"
-          }
-        }
-      }
-    }
+//      stage('Sonar Analysis') {
+//        environment {
+//            scannerHome = tool 'SONAR_SCANNER'
+//        }
+//        steps {
+//          withCredentials([string(credentialsId: 'SonarToken', variable: 'jenkins')]) {
+//          withSonarQubeEnv('SONAR_LOCAL') {
+//              bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000/${JENKINS} -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java -Dsonar.java.binaries=target -Dsonar.projectBaseDir=/Users/Eder Wentz/.jenkins/workspace/Deploy Backend"
+//              //bat "${scannerHome}/bin/sonar-scanner.bat -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.java.binaries=target -Dsonar.projectBaseDir=C:/Users/Eder Wentz/.jenkins/workspace/Deploy-Backend -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//              //bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://localhost:9000/${JENKINS} -Dsonar.login=421277384d4bc360d08df75e1bbd49be82dbde90 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java -Dsonar.projectKey=Deploy-Backend -Dsonar.java.binaries=target -Dsonar.projectBaseDir=C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Deploy Backend"
+//          }
+//        }
+//      }
+//    }
     stage ('Quality Gate'){
         steps {
           sleep(5)
