@@ -65,7 +65,7 @@ pipeline {
             steps {
                 //dir('functional-test') {
                 //    git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-functional-test'
-                powershell.exe "'docker rmi $(docker images -f "reference=*build*" -q)'"
+                powershell.exe ('docker rmi $(docker images -f "reference=*build*" -q)')
                 //powershell.exe 'Get-Children -Path | sort CreationTime -Descending | Select -Skyp 3 | Remove-Item -Recursive -Confirme:$false -Force'
                 }
             }
