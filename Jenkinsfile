@@ -69,7 +69,6 @@ pipeline {
                 //powershell.exe 'Get-Children -Path | sort CreationTime -Descending | Select -Skyp 3 | Remove-Item -Recursive -Confirme:$false -Force'
                 }
             }
-        }
 
         stage('Deploy Prod') {
             steps {
