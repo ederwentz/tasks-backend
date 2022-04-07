@@ -63,7 +63,7 @@ pipeline {
         }
         stage ('Limpeza deploy Prod') {
             steps {
-                  bat 'powershell 'docker rmi $(docker images -f "reference=*build*" -q)''
+                  bat 'powershell "docker rmi $(docker images -f "reference=*build*" -q)"'
                 }
             }
 
