@@ -63,13 +63,9 @@ pipeline {
         }
         stage ('Limpeza deploy Prod') {
             steps {
-                def PowerShell(psCmd) {
-                    psCmd=psCmd.replaceAll("%", "%%")
-                    bat "powershell.exe 'docker rmi $(docker images -f "reference=*build*" -q)'"
-//                //powershell.exe 'Get-Children -Path | sort CreationTime -Descending | Select -Skyp 3 | Remove-Item -Recursive -Confirme:$false -Force'
+                  bat "powershell.exe 'docker rmi $(docker images -f "reference=*build*" -q)'"
                 }
             }
-        }
 
         stage('Deploy Prod') {
             steps {
