@@ -61,11 +61,6 @@ pipeline {
                 }
             }
         }
-        stage ('Limpeza deploy Prod') {
-            steps {
-                  bat 'powershell "docker rmi $(docker images -f "reference=*build*" -q)"'
-                }
-            }
 
         stage('Deploy Prod') {
             steps {
@@ -73,6 +68,12 @@ pipeline {
                 bat 'docker-compose up -d'
             }
         }
+        stage ('Limpeza deploy Prod') {
+            steps {
+                  bat 'powershell "docker rmi $(docker images -f "reference=*build*" -q)"'
+                }
+            }
+           
         stage ('Health Check') {
             steps {
                 sleep(10)
