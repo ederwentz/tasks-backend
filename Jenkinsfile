@@ -16,7 +16,6 @@ pipeline {
             environment {
                 scannerHome = tool 'SONAR_SCANNER'
             }
-         }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
                     bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=5bdeeabb24ad3efb373575cb8dc54b90d88dfea3 -Dsonar.projectKey=Deploy-Backend -Dsonar.projectBaseDir=C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Deploy Backend -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
@@ -24,6 +23,7 @@ pipeline {
  //                   bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://192.168.1.15:9000 -Dsonar.login=5bdeeabb24ad3efb373575cb8dc54b90d88dfea3 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
                 }
             }
+        }
         }
         stage ('Quality Gate') {
             steps {
