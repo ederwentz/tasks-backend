@@ -17,7 +17,7 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=5bdeeabb24ad3efb373575cb8dc54b90d88dfea3 -Dsonar.projectKey=Deploy-Backend -Dsonar.projectBaseDir='C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Deploy Backend' -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=5bdeeabb24ad3efb373575cb8dc54b90d88dfea3 -Dsonar.projectKey=Deploy-Backend -Dsonar.projectBaseDir=target -Dsonar.java.binaries=C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Deploy Backend\ -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
  //                   bat "${scannerHome}/bin/sonar-scanner.bat -e -Dsonar.host.url=http://192.168.1.15:9000/ -Dsonar.login=5bdeeabb24ad3efb373575cb8dc54b90d88dfea3 -Dsonar.coverage.exclusions=**/.mvn/**, **/scr/test/**,**/model/**,**Application.java -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://192.168.1.15:9000 -Dsonar.java.binaries=target"
  //                   bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=Deploy-Backend -Dsonar.host.url=http://192.168.1.15:9000 -Dsonar.login=5bdeeabb24ad3efb373575cb8dc54b90d88dfea3 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/src/test/**,**/model/**,**Application.java"
                 }
