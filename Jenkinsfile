@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@ederwentz 
-ederwentz
-/
-tasks-backend
-Public
-forked from wcaquinocursos/tasks-backend
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-tasks-backend/Jenkinsfile
-@ederwentz
-ederwentz Update Jenkinsfile
-Latest commit ca922fd 3 days ago
- History
- 1 contributor
-101 lines (98 sloc)  4.87 KB
-   
 pipeline {
     agent any
     stages {
