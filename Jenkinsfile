@@ -15,7 +15,7 @@ pipeline {
             environment {
 //                target = '${SONAR_RUN_WORKSPACE}'
 //                SonarToken = '5bdeeabb24ad3efb373575cb8dc54b90d88dfea3'
-                def scannerHome = tool 'SONAR_SCANNER';
+                scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
