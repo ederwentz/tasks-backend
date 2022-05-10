@@ -14,7 +14,7 @@ pipeline {
         stage ('Sonar Analysis') {
             environment {
 //                target = '${SONAR_RUN_WORKSPACE}'
-                SonarToken = 'cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4'
+                SONARTOKEN = 'cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4'
                 def scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
@@ -38,7 +38,7 @@ pipeline {
                 sleep(5)
                 timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true,
-                    credentialsId: '$SONARTOKEN'
+                    credentialsId: '${SONARTOKEN}',
                 }
             }
         }
