@@ -34,11 +34,11 @@ pipeline {
         
         stage ('Quality Gate') {
             steps {
-                waitForQualityGate abortPipeline: true
+               // waitForQualityGate abortPipeline: true
 //                credentialsId: '${SONARSCANNER}'
-                //sleep(5)
-                //timeout(time: 1, unit: 'MINUTES') {
-                //    waitForQualityGate abortPipeline: true,
+                sleep(5)
+                timeout(time: 1, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 //    credentialsId: '${SONARSCANNER}'
                 //}
             }
