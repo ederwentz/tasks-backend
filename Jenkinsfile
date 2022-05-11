@@ -32,16 +32,25 @@ pipeline {
             }
         }
 //    } 
-        
-        stage ('Quality Gate') {
-            steps {
-                sleep(5)
-                timeout(time: 1, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-    }
+        stage("Quality Gate"){
+                timeout(time: 1, unit: 'HOURS') {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }
+
+
+ //       stage ('Quality Gate') {
+ //           steps {
+ //               sleep(5)
+ //               timeout(time: 1, unit: 'MINUTES') {
+ //                   waitForQualityGate abortPipeline: true
+ //               }
+ //           }
+ //       }
+ //   }
 //        stage ('Deploy Backend') {
 //            steps {
 //                deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
