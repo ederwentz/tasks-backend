@@ -44,8 +44,6 @@ pipeline {
                     //timeout(time: 1, unit: 'MINUTES') {
                     //waitForQualityGate('SONAR_LOCAL' , abortPipeline: true),
                     //credentialsId: 'SonarScanner'  
-                    }          
-                }
             }
         }
     }
