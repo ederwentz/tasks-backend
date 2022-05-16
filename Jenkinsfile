@@ -41,7 +41,7 @@ pipeline {
                 timeout(time: 1, unit: 'MINUTES') {
                     //waitForQualityGate('SONAR_LOCAL' , abortPipeline: true),
                     //credentialsId: 'SonarScanner'
-                    def qualityGate = waitForQualityGate()
+                    def qualityGate = waitForQualityGate(),
                     if (qualityGate.status == 'ERROR') {
                     currentBuild.result = 'UNSTABLE'
                     }
