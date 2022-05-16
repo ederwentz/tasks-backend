@@ -19,7 +19,7 @@ pipeline {
                 def scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
-                withSonarQubeEnv('SONAR_LOCAL') {
+                withSonarQubeEnv('SONAR_LOCAL', credentialsId: 'SonarScanner') {
                     bat "${scannerHome}/bin/sonar-scanner.bat -e 'sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4' -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
