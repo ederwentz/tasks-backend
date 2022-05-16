@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+    //agent any
+    node
     stages {
         stage ('Build Backend') {
             steps {
@@ -36,12 +37,16 @@ pipeline {
         stage ('Quality Gate') {
             steps {
                 sleep(5)
-                timeout(time: 1, unit: 'MINUTES') {
-                //waitForQualityGate(abortPipeline: true, credentialsId: '27700232-2d8e-4505-981c-4b6310a02651')
-                waitForQualityGate abortPipeline: true, credentialsId: 'SonarScanner'
-                //sleep(5)
                 //timeout(time: 1, unit: 'MINUTES') {
-                //    waitForQualityGate abortPipeline: true
+                //waitForQualityGate(abortPipeline: true, credentialsId: '27700232-2d8e-4505-981c-4b6310a02651')
+                //waitForQualityGate abortPipeline: true, credentialsId: 'SonarScanner'
+                //sleep(5)
+                timeout(time: 1, unit: 'HOURS') {
+                    //waitForQualityGate abortPipeline: true, credentialsId: 'SonarScanner'
+                    def scannerHome = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+                    if (qg.status != 'OK'){
+                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
                 }
             }
         }
