@@ -42,6 +42,7 @@ pipeline {
                     //waitForQualityGate('SONAR_LOCAL' , abortPipeline: true),
                     //credentialsId: 'SonarScanner'
                     def qualityGate = waitForQualityGate(),
+                    credentialsId: 'SonarScanner'
                     //if (qualityGate.status == 'ERROR') {
                     //currentBuild.result = 'UNSTABLE'
                 
