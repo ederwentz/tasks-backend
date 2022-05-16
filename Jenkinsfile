@@ -43,12 +43,7 @@ pipeline {
                     credentialsId: 'cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4',
                     //timeout(time: 1, unit: 'MINUTES') {
                     //waitForQualityGate('SONAR_LOCAL' , abortPipeline: true),
-                    //credentialsId: 'SonarScanner'
-                    //def qualityGate = waitForQualityGate(),
-                    //credentialsId: 'SonarScanner'
-                    //if (qualityGate.status == 'ERROR') {
-                    //currentBuild.result = 'UNSTABLE'
-                
+                    //credentialsId: 'SonarScanner'            
                 }
             }
         }
