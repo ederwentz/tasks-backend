@@ -43,7 +43,7 @@ pipeline {
                 //waitForQualityGate abortPipeline: true, credentialsId: 'SonarScanner'
                 //sleep(5)
                 timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'SonarScanner'
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
