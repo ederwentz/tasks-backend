@@ -1,6 +1,6 @@
 pipeline {
-    //agent any
-    node
+    agent any
+    //node
     stages {
         stage ('Build Backend') {
             steps {
