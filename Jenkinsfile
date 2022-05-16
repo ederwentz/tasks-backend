@@ -37,10 +37,14 @@ pipeline {
         
         stage ('Quality Gate') {
             steps {
-                sleep(10)
+                sleep(5)
                 timeout(time: 1, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true,
-                    credentialsId: 'SonarScanner'
+                    //waitForQualityGate('SONAR_LOCAL' , abortPipeline: true),
+                    //credentialsId: 'SonarScanner'
+                    def qualityGate = waitForQualityGate()
+                    if (qualityGate.status == 'ERROR') {
+                    currentBuild.result = 'UNSTABLE'
+                    }
                 }
             }
         }
