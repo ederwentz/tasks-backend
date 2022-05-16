@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                    bat "${scannerHome}/bin/sonar-scanner.bat -e sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                     bat "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                     //bat "mvn clean verify sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=cfe8ea9cdf527feaa5aefac54460f1d7a565e9d4 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
@@ -37,13 +37,9 @@ pipeline {
         
         stage ('Quality Gate') {
             steps {
-                //sleep(5)
-                //timeout(time: 1, unit: 'MINUTES') {
-                //waitForQualityGate(abortPipeline: true, credentialsId: '27700232-2d8e-4505-981c-4b6310a02651')
-                //waitForQualityGate abortPipeline: true, credentialsId: 'SonarScanner'
-                //sleep(5)
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
+                sleep(5)
+                timeout(time: 1, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: false
                 }
             }
         }
