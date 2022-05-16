@@ -39,10 +39,7 @@ pipeline {
             steps {
                 sleep(5)
                 timeout(time: 1, unit: 'MINUTES') {
-                    //waitForQualityGate abortPipeline: true
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'true') {
-                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    waitForQualityGate(abortPipeline: true)
                     }
                 }
             }
