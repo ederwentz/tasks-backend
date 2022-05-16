@@ -73,11 +73,11 @@ pipeline {
                 }
             }
         }
-        stage ('Limpeza deploy Prod') {
-            steps {
-                 bat 'powershell.exe "docker rmi $(docker images -f "reference=*build*" -q)"'
-              }
-            }
+        //stage ('Limpeza deploy Prod') {
+        //    steps {
+        //         bat 'powershell.exe "docker rmi $(docker images -f "reference=*build*" -q)"'
+        //      }
+        //    }
         stage('Deploy Prod') {
             steps {
                 bat 'docker-compose build'
