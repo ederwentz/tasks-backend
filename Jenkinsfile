@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                     bat "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=d42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                     bat "mvn sonar:sonar -Dsonar.projectKey=task-backend -Dsonar.login=d42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=d42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=d42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                     //bat "mvn clean verify sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=d42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
@@ -39,8 +39,8 @@ pipeline {
             steps {
                 sleep(15)
                 timeout(time: 1, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true 
-                //credentialsId: 'd42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10'
+                waitForQualityGate abortPipeline: true,
+                credentialsId: 'd42ab3d6b57b7c38eff7b6bb7fc20335c9d49a10'
                 //sleep(5)
                 //timeout(time: 1, unit: 'MINUTES') {
                 //    waitForQualityGate abortPipeline: true,
