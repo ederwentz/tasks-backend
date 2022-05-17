@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                     bat "mvn sonar:sonar -Dsonar.projectKey=tasks-backend -Dsonar.login=20683ffa762dff6f7f08ffbb1a6924823252b251 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                     bat "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=20683ffa762dff6f7f08ffbb1a6924823252b251 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=8a7a69129ca462862458735f16c2ad352ff89a68 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                   bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=8a7a69129ca462862458735f16c2ad352ff89a68 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                     //bat "mvn clean verify sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=8a7a69129ca462862458735f16c2ad352ff89a68 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
