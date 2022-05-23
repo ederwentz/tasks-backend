@@ -23,9 +23,9 @@ pipeline {
 //                    bat "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    bat "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//                    bat "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "${scannerHome}/bin/sonar-scanner.bat -Dproject.settings=C:\\Users\\Eder Wentz\\.jenkins\\tools\\hudson.plugins.sonar.SonarRunnerInstallation\\SONAR_SCANNER\\config\\sonar-scanner.properties" 
-//                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java -Dsonar.projectBaseDir=C:\\Users\\Eder Wentz\\.jenkins\\workspace\\Pipeline"
+                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                 }
             }
         }
