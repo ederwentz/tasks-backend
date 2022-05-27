@@ -23,7 +23,7 @@ pipeline {
 //                    sh "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    sh "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    sh "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    sh "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://192.168.1.118:9000 -Dsonar.login=6a5d882e151292e5cec7b94d3241acb4b33a969c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                    sh "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=6a5d882e151292e5cec7b94d3241acb4b33a969c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    sh "${scannerHome}/bin/sonar-scanner.sh -Dproject.settings=C:\\Users\\Eder Wentz\\.jenkins\\tools\\hudson.plugins.sonar.SonarRunnerInstallation\\SONAR_SCANNER\\config\\sonar-scanner.properties" 
 //                    sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                 }
@@ -41,7 +41,7 @@ pipeline {
 
         stage ('Deploy Backend') {
             steps {
-                deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.1.113:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+                deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
             }
         }
         stage ('API Test') {
@@ -57,7 +57,7 @@ pipeline {
                 dir('frontend') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-frontend'
                     sh 'mvn clean package'
-                    deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.1.113:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                    deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
         }
