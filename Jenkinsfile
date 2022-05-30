@@ -19,7 +19,7 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-                    bat "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                    bat "mvn sonar:sonar -Dsonar.projectName=DeployBackend -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
