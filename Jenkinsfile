@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage ('Build Backend') {
             steps {
-                sh 'mvn clean package -DskipTests=true'
+                bat 'mvn clean package -DskipTests=true'
             }
         }
         stage ('Unit Tests') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
         stage ('Sonar Analysis') {
@@ -20,19 +20,19 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SONAR_LOCAL') {
-//                    sh "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-//                    sh "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-//                    sh "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    sh "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=6a5d882e151292e5cec7b94d3241acb4b33a969c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-//                    sh "${scannerHome}/bin/sonar-scanner.sh -Dproject.settings=C:\\Users\\Eder Wentz\\.jenkins\\tools\\hudson.plugins.sonar.SonarRunnerInstallation\\SONAR_SCANNER\\config\\sonar-scanner.properties" 
-//                    sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//                    bat "mvn sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//                    bat "mvn clean install sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//                    bat "mvn clean package sonar:sonar -Dsonar.projectKey=DeployBackend -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                    bat "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//                    bat "${scannerHome}/bin/sonar-scanner.bat -Dproject.settings=C:\\Users\\Eder Wentz\\.jenkins\\tools\\hudson.plugins.sonar.SonarRunnerInstallation\\SONAR_SCANNER\\config\\sonar-scanner.properties" 
+//                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=e89f6b58d5a145cd62c7c08d1ad06d07fb9ca9c0 -Dsonar.java.binaries=target -Dsonar.language=java -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                 }
             }
         }
         
         stage ('Quality Gate') {
             steps {
-                sleep(20)
+                sleep(5)
                 timeout(time: 1, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
                 }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 dir('api-test') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-api-test'
-                    sh 'mvn test'
+                    bat 'mvn test'
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-frontend'
-                    sh 'mvn clean package'
+                    bat 'mvn clean package'
                     deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
@@ -65,19 +65,19 @@ pipeline {
             steps {
                 dir('functional-test') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-functional-test'
-                    sh 'mvn test'
+                    bat 'mvn test'
                 }
             }
         }
         //stage ('Limpeza deploy Prod') {
         //    steps {
-        //         sh 'powershell.exe "docker rmi $(docker images -f "reference=*build*" -q)"'
+        //         bat 'powershell.exe "docker rmi $(docker images -f "reference=*build*" -q)"'
         //      }
         //    }
         stage('Deploy Prod') {
             steps {
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
+                bat 'docker-compose build'
+                bat 'docker-compose up -d'
             }
         }
 
@@ -85,7 +85,7 @@ pipeline {
             steps {
                 sleep(5)
                 dir('functional-test') {
-                    sh 'mvn verify -Dskip.surefire.tests'
+                    bat 'mvn verify -Dskip.surefire.tests'
                 }
             }
         }
