@@ -3,13 +3,11 @@ services:
   db:
     container_name: pg-prod
     image: postgres:9.6
-    #ports: 
-    #  - 5432:5432
     networks:
       - prod_net_back
     environment:
-      - POSTGRES_DB=tasks
       - POSTGRES_PASSWORD=passwd
+      - POSTGRES_DB=tasks
     volumes:
       - prod_postgresql:/var/lib/postgresql
       - prod_postgresql_data:/var/lib/postgresql/data
