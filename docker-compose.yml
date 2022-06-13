@@ -33,7 +33,7 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USER=postgres
       - DATABASE_PASSWD=passwd
-      - DATABASE_UPDATE=none
+    #  - DATABASE_UPDATE=none
     depends_on:
       - db
       
@@ -49,12 +49,13 @@ services:
       - prod_net_front
     ports:
       - 8003:8080
+    # - 9999:8080 
     environment:
       - BACKEND_HOST=backend
       - BACKEND_PORT=8080
       - APP_VERSION=build_${BUILD_NUMBER}
-    #depends_on:
-    #  - backend
+    depends_on:
+      - backend
 
 networks:
   prod_net_front:
