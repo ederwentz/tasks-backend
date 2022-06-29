@@ -5,7 +5,6 @@ pipeline {
         stage ('Build Backend') {
             steps {
                 //bat 'mvn clean package -DskipTests=true'
-                sh 'mvn clean install'
                 sh 'mvn clean package -DskipTests=true'
             }
         }
