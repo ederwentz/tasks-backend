@@ -4,12 +4,14 @@ pipeline {
     stages {
         stage ('Build Backend') {
             steps {
-                bat 'mvn clean package -DskipTests=true'
+                //bat 'mvn clean package -DskipTests=true'
+                sh 'mvn clean package -DskipTests=true'
             }
         }
         stage ('Unit Tests') {
             steps {
-                bat 'mvn test'
+                //bat 'mvn test'
+                sh 'mvn test'
             }
         }
         stage ('Sonar Analysis') {
@@ -25,7 +27,8 @@ pipeline {
 //                    bat "mvn clean verify -Dsonar.projectKey=DeployBackend -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
 //                    bat "${scannerHome}/bin/sonar-scanner.bat -Dproject.settings=C:\\Users\\Eder Wentz\\.jenkins\\tools\\hudson.plugins.sonar.SonarRunnerInstallation\\SONAR_SCANNER\\config\\sonar-scanner.properties" 
 //                    bat "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=ff389cc8e5a756a370ceae9d982ac1f2044f953c -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=1e7ff3d35b433b58d03c0b8b117fc6b5283d23f6 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+//                    bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=1e7ff3d35b433b58d03c0b8b117fc6b5283d23f6 -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=5816553b13792d0c6573d9631c492edcd3919d8e -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                 }
             }
         }
@@ -48,7 +51,8 @@ pipeline {
             steps {
                 dir('api-test') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-api-test'
-                    bat 'mvn test'
+                    //bat 'mvn test'
+                    sh 'mvn test'
                 }
             }
         }
@@ -56,7 +60,8 @@ pipeline {
             steps {
                 dir('frontend') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-frontend'
-                    bat 'mvn clean package'
+                    //bat 'mvn clean package'
+                    sh 'mvn clean package'
                     deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
@@ -65,7 +70,8 @@ pipeline {
             steps {
                 dir('functional-test') {
                     git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-functional-test'
-                    bat 'mvn test'
+                    //bat 'mvn test'
+                    sh 'mvn test'
                 }
             }
         }
@@ -76,8 +82,10 @@ pipeline {
         //    }
         stage('Deploy Prod') {
             steps {
-                bat 'docker-compose build'
-                bat 'docker-compose up -d'
+                //bat 'docker-compose build'
+                //bat 'docker-compose up -d'
+                sh 'docker-compose build'
+                sh 'docker-compose up -d'
             }
         }
 
@@ -85,7 +93,8 @@ pipeline {
             steps {
                 sleep(5)
                 dir('functional-test') {
-                    bat 'mvn verify -Dskip.surefire.tests'
+                    //bat 'mvn verify -Dskip.surefire.tests'
+                    sh 'mvn verify -Dskip.surefire.tests'
                 }
             }
         }
