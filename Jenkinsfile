@@ -16,29 +16,29 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage ('Sonar Analysis') {
-            environment {
-                def scannerHome = tool 'SONAR_SCANNER';
+//        stage ('Sonar Analysis') {
+//            environment {
+//                def scannerHome = tool 'SONAR_SCANNER';
 //                scannerHome = tool 'SONAR_SCANNER';
-            }
-            steps {
-                withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
-                withSonarQubeEnv('SONAR_LOCAL') {
+//            }
+//            steps {
+ //               withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
+ //               withSonarQubeEnv('SONAR_LOCAL') {
                     //bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.1.118:9000 -Dsonar.login=a5d7a261967227a2f339806efb7c4dd6550424c2 -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    }
-                }
-            }
-        }
+ //                   sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.1.118:9000 -Dsonar.login=a5d7a261967227a2f339806efb7c4dd6550424c2 -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+ //                   }
+ //               }
+ //           }
+ //       }
         
-        stage ('Quality Gate') {
-            steps {
-                sleep(21)
-                timeout(time: 1, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+ //       stage ('Quality Gate') {
+ //           steps {
+ //               sleep(21)
+ //               timeout(time: 1, unit: 'MINUTES') {
+ //               waitForQualityGate abortPipeline: true
+ //               }
+ //           }
+ //       }
 
         stage ('Deploy Backend') {
             steps {
