@@ -18,8 +18,8 @@ pipeline {
         }
         stage ('Sonar Analysis') {
             environment {
-                def scannerHome = tool 'SONAR_SCANNER';
-//                scannerHome = tool 'SONAR_SCANNER';
+//                def scannerHome = tool 'SONAR_SCANNER';
+                scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
                 withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
