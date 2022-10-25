@@ -18,14 +18,14 @@ pipeline {
         }
         stage ('Sonar Analysis') {
             environment {
-//                def scannerHome = tool 'SONAR_SCANNER';
-                scannerHome = tool 'SONAR_SCANNER';
+                def scannerHome = tool 'SONAR_SCANNER';
+//                scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
                 withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
                 withSonarQubeEnv('SONAR_LOCAL') {
                     //bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.1.113:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
+                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     }
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
         
         stage ('Quality Gate') {
             steps {
-                sleep(35)
+                sleep(20)
                 timeout(time: 1, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
                 }
