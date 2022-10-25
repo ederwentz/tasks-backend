@@ -49,8 +49,7 @@ pipeline {
             steps {
                 dir('api-test') {
                     git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-api-test'
-                    //bat 'mvn test'
-                    sh 'mvn install'
+                    //bat 'mvn test
                     sh 'mvn test'
                 }
             }
