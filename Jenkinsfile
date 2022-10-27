@@ -25,7 +25,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
                 withSonarQubeEnv('SONAR_LOCAL') {
                     //bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
+                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.1.118:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     }
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
 
         stage ('Deploy Backend') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+                deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.1.118:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
             }
         }
         stage ('API Test') {
@@ -60,7 +60,7 @@ pipeline {
                     git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-frontend'
                     //bat 'mvn clean package'
                     sh 'mvn clean package'
-                    deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                    deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.1.118:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
         }
