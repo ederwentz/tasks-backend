@@ -70,6 +70,7 @@ pipeline {
                 dir('functional-test') {
                     git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-functional-test'
                     //bat 'mvn test'
+                    sh 'mvn install'
                     sh 'mvn test'
                 }
             }
