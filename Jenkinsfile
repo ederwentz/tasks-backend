@@ -5,27 +5,27 @@ pipeline {
     stages {
         stage ('Build Backend') {
             steps {
-                bat 'mvn clean package -DskipTests=true'
-                //sh 'mvn install'
-                //sh 'mvn clean package -DskipTests=true'
+                //bat 'mvn clean package -DskipTests=true'
+                sh 'mvn install'
+                sh 'mvn clean package -DskipTests=true'
             }
         }
         stage ('Unit Tests') {
             steps {
-                bat 'mvn test'
-                //sh 'mvn test'
+                //bat 'mvn test'
+                sh 'mvn test'
             }
         }
         stage ('Sonar Analysis') {
             environment {
-//                def scannerHome = tool 'SONAR_SCANNER';
-                scannerHome = tool 'SONAR_SCANNER';
+                def scannerHome = tool 'SONAR_SCANNER';
+//                scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
                 withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
                 withSonarQubeEnv('SONAR_LOCAL') {
-                    bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
-                    //sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.1.112:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
+                    //bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
+                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.1.112:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     }
                 }
             }
@@ -52,9 +52,9 @@ pipeline {
             steps {
                 dir('api-test') {
                     git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-api-test'
-                    bat 'mvn test
+                    //bat 'mvn test
                     //sh 'mvn install'
-                    //sh 'mvn test'
+                    sh 'mvn test'
                 }
             }
         }
@@ -62,8 +62,8 @@ pipeline {
             steps {
                 dir('frontend') {
                     git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-frontend'
-                    bat 'mvn clean package'
-                    //sh 'mvn clean package'
+                    //bat 'mvn clean package'
+                    sh 'mvn clean package'
                     deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.1.112:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
@@ -72,9 +72,9 @@ pipeline {
             steps {
                 dir('functional-test') {
                     git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-functional-test'
-                    bat 'mvn test'
+                    //bat 'mvn test'
                     //sh 'mvn install'
-                    //sh 'mvn test'
+                    sh 'mvn test'
                 }
             }
         }
@@ -85,10 +85,10 @@ pipeline {
         //    }
         stage('Deploy Prod') {
             steps {
-                bat 'docker-compose build'
-                bat 'docker-compose up -d'
-                //sh 'docker-compose build'
-                //sh 'docker-compose up -d'
+                //bat 'docker-compose build'
+                //bat 'docker-compose up -d'
+                sh 'docker-compose build'
+                sh 'docker-compose up -d'
             }
         }
 
@@ -96,8 +96,8 @@ pipeline {
             steps {
                 sleep(5)
                 dir('functional-test') {
-                    bat 'mvn verify -Dskip.surefire.tests'
-                    //sh 'mvn verify -Dskip.surefire.tests'
+                    //bat 'mvn verify -Dskip.surefire.tests'
+                    sh 'mvn verify -Dskip.surefire.tests'
                 }
             }
         }
