@@ -39,7 +39,7 @@ pipeline {
                 // windows
                 //sleep(21)
                 // server
-                sleep(20)
+                sleep(40)
                 timeout(time: 1, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
                 }
