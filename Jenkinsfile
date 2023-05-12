@@ -28,7 +28,8 @@ pipeline {
                     // server local
                     //sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     // server dinamico
-                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.0.115:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
+                    //sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.0.115:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
+                    sh "\"${scannerHome}/bin/sonar-scanner\" -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.0.115:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     }
                 }
             }
