@@ -22,14 +22,14 @@ pipeline {
 //                scannerHome = tool 'SONAR_SCANNER';
             }
             steps {
-                withCredentials([string(credentialsId: 'SonarQube', variable: 'TokenSonarQube')]){
+                withCredentials([string(credentialsId: 'sonarqube', variable: 'TokenSonarQube')]){
                 withSonarQubeEnv('SONAR_LOCAL') {
                     //bat "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=DeployBackend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java"
                     // server local
                     //sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     // server dinamico
                     //sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.0.115:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
-                    sh "\"${scannerHome}/bin/sonar-scanner\" -D -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.0.115:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
+                    sh "\"${scannerHome}/bin/sonar-scanner\" -e -Dsonar.projectKey=Deploy_Backend -Dsonar.host.url=http://192.168.0.115:9000 -Dsonar.login=${TokenSonarQube} -Dsonar.java.binaries=target -Dproject.build.sourceEncoding=UTF-8 -Dsonar.coverage.exclusions=**/.mvn/**,**/scr/test/**,**/model/**,**Application.java,**TaskControllerTest.java"
                     }
                 }
             }
@@ -52,13 +52,13 @@ pipeline {
                 // server local
                 //deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
                 // server dinamico
-                deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.0.130:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat_login', path: '', url: 'http://192.168.0.130:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
             }
         }
         stage ('API Test') {
             steps {
                 dir('api-test') {
-                    git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-api-test'
+                    git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-api-test'
                     //bat 'mvn test
                     //sh 'mvn install'
                     sh 'mvn test'
@@ -68,20 +68,20 @@ pipeline {
         stage ('Deploy Frontend') {
             steps {
                 dir('frontend') {
-                    git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-frontend'
+                    git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-frontend'
                     //bat 'mvn clean package'
                     sh 'mvn clean package'
                     // server local
                     //deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                     // server dinamico
-                    deploy adapters: [tomcat9(credentialsId: 'TomcatLogin', path: '', url: 'http://192.168.0.130:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                    deploy adapters: [tomcat9(credentialsId: 'tomcat_login', path: '', url: 'http://192.168.0.130:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
         }
         stage ('Functional Test') {
             steps {
                 dir('functional-test') {
-                    git credentialsId: 'GithubLogin', url: 'https://github.com/ederwentz/tasks-functional-test'
+                    git credentialsId: 'github_login', url: 'https://github.com/ederwentz/tasks-functional-test'
                     //bat 'mvn test'
                     //sh 'mvn install'
                     sh 'mvn test'
