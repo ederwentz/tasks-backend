@@ -3,8 +3,8 @@ services:
   db:
     container_name: pg-prod
     image: postgres:15.1
-    ports:
-      - 5432:5432
+    #ports:
+    #  - 5432:5432
     networks:
       - prod_net_back
     environment:
